@@ -1,0 +1,26 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Instalar Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Instalar Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Copiar arquivos do projeto
+      copy:
+        src: /caminho/local/repo-devops-seplag/
+        dest: /home/usuario/repo-devops-seplag/
+        owner: usuario
+        group: usuario
+
+    - name: Iniciar docker-compose
+      shell: |
+        cd /home/usuario/repo-devops-seplag/docker
+        docker-compose up -d
+
